@@ -1,0 +1,34 @@
+package commandline;
+
+
+public class Flagtypes
+{
+    public String toString()
+    {
+	return "\t\t [: SciSort :]\n\n[ Help: "+helpFlag+" "+longhelpFlag+" ]" +
+	    "[ Verbose: "+verbFlag+" ]" +
+	    "[ Nickname: "+nickFlag+" ]" +
+	    "[ Author(1st): "+authFlag+" ]" +
+	    "[ Institution of author(1st): "+instiFlag+" ]" +
+	    "[ Journal: "+journFlag+" ]" +
+	    "[ Date of publication: "+dateFlag+" ]" +
+	    "[ Main scientific field of paper: "+fieldFlag+" ]" +
+	    "[ subfield: "+subfieldFlag+" ]" +
+	    "[ sub-subfield: "+subsubfieldFlag+" ]" +
+	    "[ sub-sub-subfield: "+subsubsubfieldFlag+" ]"+'\n';
+    }
+    
+    public static final String helpFlag = "-h";
+    public static final String longhelpFlag = "--help";
+    public static final String verbFlag = "-v";
+
+    public static final String nickFlag = "-n";
+    public static final String authFlag = "-a";
+    public static final String instiFlag = "-i";
+    public static final String journFlag = "-j";
+    public static final String dateFlag = "-d";
+    public static final String fieldFlag = "-f";
+    public static final String subfieldFlag = "-sf";
+    public static final String subsubfieldFlag = "-ssf";
+    public static final String subsubsubfieldFlag = "-sssf";
+}
