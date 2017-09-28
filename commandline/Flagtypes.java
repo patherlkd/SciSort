@@ -12,11 +12,14 @@ public final class Flagtypes
 	    "[ Author(1st): "+authFlag+" ]\n" +
 	    "[ Institution of author(1st): "+instiFlag+" ]\n" +
 	    "[ Journal: "+journFlag+" ]\n" +
-	    "[ Date of publication ddmonthyyyy e.g. 11jul2011: "+dateFlag+" ]\n" +
+	    "[ Year of publication: "+yearFlag+" ]\n" +
+	    "[ Month of publication: "+monthFlag+" ]\n" +
+	    "[ Day of publication: "+dayFlag+" ]\n" +
+	   
 	    "[ Main scientific field of paper: "+fieldFlag+" ]\n" +
-	    "[ subfield: "+subfieldFlag+" ]\n" +
-	    "[ sub-subfield: "+subsubfieldFlag+" ]\n" +
-	    "[ sub-sub-subfield: "+subsubsubfieldFlag+" ]"+'\n';
+	    "[ Sub-field: "+subfieldFlag+" ]\n" +
+	    "[ Sub-sub-field: "+subsubfieldFlag+" ]\n" +
+	    "[ Sub-sub-sub-field: "+subsubsubfieldFlag+" ]"+'\n';
     }
     
     public static final String helpFlag = "-h";
@@ -27,7 +30,9 @@ public final class Flagtypes
     public static final String authFlag = "-a";
     public static final String instiFlag = "-i";
     public static final String journFlag = "-j";
-    public static final String dateFlag = "-d";
+    public static final String yearFlag = "-y";
+        public static final String monthFlag = "-m";
+        public static final String dayFlag = "-d";
     public static final String fieldFlag = "-f";
     public static final String subfieldFlag = "-sf";
     public static final String subsubfieldFlag = "-ssf";

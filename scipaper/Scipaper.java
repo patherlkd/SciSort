@@ -38,15 +38,25 @@ public class Scipaper
 	    throw new Exception();
 	
     }
+
+    private String nickname;
+    public void setNickname(String nickname)
+    {
+	this.nickname=nickname;
+    }
+    public String getNickname()
+    {
+	return this.nickname;
+    }
     
     private String filename;
     private String sciname;
-    private String nickname;
+    
     private String author;
     private String instition;
     private int year;
+    private int month;
     private int day;
-    private String month;
 
     private String journal;
     private String field;

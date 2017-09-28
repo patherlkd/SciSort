@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.File;
 
 public class SciAdd
 {    
-
-   
     private static boolean verbose;
 
     private static void help()
@@ -18,12 +17,20 @@ public class SciAdd
 	System.exit(0);
     }
 
+    private static void applyoptions(
+				     List<Option> optionlsi,
+				     Scipaper paper)
+    {
 
+
+    }
+
+    
     private static void checkoptions(List<Option> optionlist)
-    {// User must supply -n, -a, -d and -f for SciSort to be useful at all
+    {// User must supply -n, -a, -y and -f for SciAdd and hence SciSort to be useful at all
 	boolean hasnick=false;
 	boolean hasauth=false;
-	boolean hasdate=false;
+	boolean hasyear=false;
 	boolean hasfield=false;
 
 	if(verbose)
@@ -40,8 +47,8 @@ public class SciAdd
 			    case Flagtypes.authFlag:
 				hasauth=true;
 				break;
-			    case Flagtypes.dateFlag:
-				hasdate=true;
+			    case Flagtypes.yearFlag:
+				hasyear=true;
 				break;
 			    case Flagtypes.fieldFlag:
 				hasfield=true;
@@ -50,12 +57,13 @@ public class SciAdd
 				break;
 			    }
 		    }
-		if(!hasnick || !hasauth || !hasdate || !hasfield)
-		    throw new IllegalArgumentException("You must supply a nickname for your paper, the first author, the date ddmonthyyyy e.g. 26sep2017 and at least the relevant scientific field."); 
+		if(!hasnick || !hasauth || !hasyear || !hasfield)
+		    throw new IllegalArgumentException("You must supply a nickname for your paper, the first author, the year yyyy and at least the relevant scientific field."); 
 	    }
 	catch(IllegalArgumentException ae)
 	    {
 		System.out.println(ae);
+		System.out.println(Flagtypes.help());
 		System.exit(0);
 	    }
     }
@@ -64,7 +72,7 @@ public class SciAdd
     {
 	List<Option> optionlist = new ArrayList<Option>();
         Scipaper paper;
-
+	String versionFile = System.getProperty("user.home")+File.separator+"SciSort"+File.separator+"SciSort"+File.separator+"VERSION";
 	if(args.length==0)
 	    {
 		System.out.println("You need to pass command line arguments.");
@@ -74,6 +82,21 @@ public class SciAdd
 
 	if(args[0].equals(Flagtypes.helpFlag) || args[0].equals(Flagtypes.longhelpFlag))
 	    help();
+	else if(args[0].equals(Flagtypes.versFlag))
+	    {
+		try (BufferedReader br = new BufferedReader(new FileReader(versionFile)))
+		    {
+			String line;
+			while(( line = br.readLine()) != null)
+			    {
+				System.out.println(line);
+			    }
+		    }
+		catch(IOException ioe)
+		    {
+			ioe.printStackTrace();
+		    }
+	    }
 	
 	try
 	    {
@@ -133,14 +156,6 @@ public class SciAdd
 		System.exit(0);
 	    }
 	
-	/*for(int i = 0; i< optionlist.size(); i++)
-	  {
-	  if(optionlist.get(i).flag.equals(Flagtypes.verbFlag))
-	  {
-	  verbose=true;
-	  System.out.println("Verbosity turned on. I will tell you what I'm doing.");
-	  }
-	  }*/
 	checkoptions(optionlist);
 	
     }
