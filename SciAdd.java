@@ -72,7 +72,7 @@ public class SciAdd
     {
 	List<Option> optionlist = new ArrayList<Option>();
         Scipaper paper;
-	String versionFile = System.getProperty("user.home")+File.separator+"SciSort"+File.separator+"SciSort"+File.separator+"VERSION";
+	String versionFile = System.getProperty("user.home")+File.separator+"SciSort"+File.separator+"SciSort"+File.separator+"VERSION.md";
 	if(args.length==0)
 	    {
 		System.out.println("You need to pass command line arguments.");
