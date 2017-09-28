@@ -5,16 +5,16 @@ public class Flagtypes
 {
     public String toString()
     {
-	return "\t\t [: SciSort :]\n\n[ Help: "+helpFlag+" "+longhelpFlag+" ]" +
-	    "[ Verbose: "+verbFlag+" ]" +
-	    "[ Nickname: "+nickFlag+" ]" +
-	    "[ Author(1st): "+authFlag+" ]" +
-	    "[ Institution of author(1st): "+instiFlag+" ]" +
-	    "[ Journal: "+journFlag+" ]" +
-	    "[ Date of publication: "+dateFlag+" ]" +
-	    "[ Main scientific field of paper: "+fieldFlag+" ]" +
-	    "[ subfield: "+subfieldFlag+" ]" +
-	    "[ sub-subfield: "+subsubfieldFlag+" ]" +
+	return "\t\t*** [: Flags to use :] ***\n\n[ Help: "+helpFlag+" "+longhelpFlag+" ]\n" +
+	    "[ Verbose: "+verbFlag+" ]\n" +
+	    "[ Nickname: "+nickFlag+" ]\n" +
+	    "[ Author(1st): "+authFlag+" ]\n" +
+	    "[ Institution of author(1st): "+instiFlag+" ]\n" +
+	    "[ Journal: "+journFlag+" ]\n" +
+	    "[ Date of publication: "+dateFlag+" ]\n" +
+	    "[ Main scientific field of paper: "+fieldFlag+" ]\n" +
+	    "[ subfield: "+subfieldFlag+" ]\n" +
+	    "[ sub-subfield: "+subsubfieldFlag+" ]\n" +
 	    "[ sub-sub-subfield: "+subsubsubfieldFlag+" ]"+'\n';
     }
     
