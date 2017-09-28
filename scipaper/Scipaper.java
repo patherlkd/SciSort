@@ -1,5 +1,6 @@
 package scipaper;
 
+import exceptions.DateException;
 import java.io.File;
 
 public class Scipaper
@@ -40,20 +41,12 @@ public class Scipaper
     }
 
     private String nickname;
-    public void setNickname(String nickname)
-    {
-	this.nickname=nickname;
-    }
-    public String getNickname()
-    {
-	return this.nickname;
-    }
-    
     private String filename;
     private String sciname;
     
     private String author;
-    private String instition;
+    private String institution;
+
     private int year;
     private int month;
     private int day;
@@ -65,4 +58,51 @@ public class Scipaper
 
     private boolean pdfexists=false; // Assume it doesn't exist
     private boolean metaexists=false; // Assume it doesn't exist
+
+
+    public void setNickname(String nickname)
+    {
+	this.nickname=nickname;
+    }
+    public void setFilename(String filename)
+    {
+	this.filename=filename;
+    }
+    public void setSciname(String sciname)
+    {
+	this.sciname=sciname;
+    }
+    
+    public void setAuthor(String author)
+    {
+	this.author=author;
+    }
+    public void setInstitution(String institution)
+    {
+	this.institution=institution;
+    }
+
+    public void setYear(String year)
+	throws DateException
+    {
+	this.year=Integer.parseInt(year);
+    }
+    public void setMonth(String month)
+	throws DateException
+    {
+	this.month=Integer.parseInt(month);
+    }
+    public void setDay(String day)
+	throws DateException
+    {
+	this.day=Integer.parseInt(day);
+    }
+
+    
+
+
+
+
+
+    
 }

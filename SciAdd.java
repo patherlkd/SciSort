@@ -91,10 +91,16 @@ public class SciAdd
 			    {
 				System.out.println(line);
 			    }
+			
+			
 		    }
 		catch(IOException ioe)
 		    {
 			ioe.printStackTrace();
+		    }
+		finally
+		    {
+			System.exit(0);
 		    }
 	    }
 	
@@ -126,7 +132,8 @@ public class SciAdd
 						System.out.println("Verbosity turned on. I will tell you what I'm doing.");
 						break;
 					    }
-					
+					else
+					    {
 						try
 						    {
 							optionlist.add(new Option(args[argc],args[argc+1]));
@@ -136,10 +143,11 @@ public class SciAdd
 							System.out.println("Using flags one must place an option e.g.  -a <option>.");
 							System.exit(0);
 						    }
+					    }
 				    }
 				else
 				    {
-					throw new IllegalArgumentException("\nUsing flags one must place a flag key. e.g. -a not solely - . Type sciAdd <file_name_without_extension> -h for help. ");
+					throw new IllegalArgumentException("\nUsing flags one must place a flag key. e.g. -a not solely - . Type sciAdd -h or --help for help. ");
 				    }
 				
 				break;
