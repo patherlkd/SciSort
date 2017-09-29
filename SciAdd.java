@@ -1,16 +1,29 @@
 import scipaper.*;
 import commandline.*;
+import exceptions.date.*;
+import exceptions.emptyfield.*;
 import java.util.List;
 import java.util.ArrayList;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.File;
+import java.io.*;
+import colorx.*;
 
 public class SciAdd
 {    
-    private static boolean verbose;
 
+    public static void main(String[] args)
+    {// sciAdd runs this
+	
+	List<Option> optionlist = new ArrayList<Option>();
+        Scipaper paper = new Scipaper();
+	
+	docommandline(args,optionlist,paper);
+	applyoptions(optionlist, paper);
+	System.out.println(Colorx.GREEN("\n\t Added: \n")+paper);
+	
+    }
+    
+
+    // ==================================   METHODS AND VARS =======================================
     private static void help()
     {
 	System.out.println(Flagtypes.help());
@@ -18,21 +31,125 @@ public class SciAdd
     }
 
     private static void applyoptions(
-				     List<Option> optionlsi,
+				     List<Option> optionlist,
 				     Scipaper paper)
-    {
+    {// Parse command line arguments to the Scipaper class.
+	checkoptions(optionlist);
+	if(verbose)
+	    System.out.println("Attempting to apply specified options to a Scipaper class.");
+	
+	for(int o=0; o<optionlist.size();++o)
+	    {
+		if(verbose)
+		    System.out.println(optionlist.get(o));
+		switch(optionlist.get(o).flag)
+		    {
+		    case Flagtypes.nickFlag:
+			paper.setNickname(optionlist.get(o).option);
+			break;
+			
+		    case Flagtypes.authFlag:
+			paper.setAuthor(optionlist.get(o).option);
+			break;
+			
+		    case Flagtypes.instiFlag:
+			paper.setInstitution(optionlist.get(o).option);
+			break;
+			
+		    case Flagtypes.journFlag:
+			paper.setJournal(optionlist.get(o).option);
+			break;
+			
+		    case Flagtypes.yearFlag:
+			try
+			    {
+				paper.setYear(optionlist.get(o).option);
+			    }
+			catch(DateException de)
+			    {
+				System.out.println(de);
+				System.exit(0);
+			    }
+			break;
+			
+		    case Flagtypes.monthFlag:
+			try
+			    {
+				paper.setMonth(optionlist.get(o).option);
+			    }
+			catch(DateException de)
+			    {
+				System.out.println(de);
+				System.exit(0);
+			    }
+		
+			break;
+			
+		    case Flagtypes.dayFlag:
+			try
+			    {
+				paper.setDay(optionlist.get(o).option);
+			    }
+			catch(DateException de)
+			    {
+				System.out.println(de);
+				System.exit(0);
+			    }
+			break;
+			
+		    case Flagtypes.fieldFlag:
+			paper.setField(optionlist.get(o).option);
+			break;
+			
+		    case Flagtypes.subfieldFlag:
+			paper.setsubField(optionlist.get(o).option);
+			break;
+			
+		    case Flagtypes.subsubfieldFlag:
+			paper.setsubsubField(optionlist.get(o).option);
+			break;
+			
+		    case Flagtypes.subsubsubfieldFlag:
+			paper.setsubsubsubField(optionlist.get(o).option);
+			break;
+			
+		    default:
+			break;
+		    }
+			    
 
+	    }
+	paper.setSciname();
+	if(verbose)
+	    System.out.println("\nGreat. Your paper has the correct information for SciSort!");
 
+	
     }
 
     
     private static void checkoptions(List<Option> optionlist)
     {// User must supply -n, -a, -y and -f for SciAdd and hence SciSort to be useful at all
+	//Also looks for faulty options
 	boolean hasnick=false;
 	boolean hasauth=false;
 	boolean hasyear=false;
 	boolean hasfield=false;
 
+	try
+	    {
+		if(verbose)
+		    System.out.println("Checking for any flags not supported by the sciAdd utility.");
+		Flagtypes.checkbadflags(optionlist);
+		
+	    }
+	catch(IllegalArgumentException iae)
+	    {
+		if(verbose)
+		    System.out.println("Well.. you parsed flags which I don't know how to handle. Screw this, I'm off for a pint.");
+		System.out.println(iae);
+		System.exit(0);
+	    }	
+	
 	if(verbose)
 	    System.out.println("Ensuring user has supplied -n <nickname> -a <author> -d <date> and -f <some_field>.");
 	try
@@ -57,22 +174,32 @@ public class SciAdd
 				break;
 			    }
 		    }
+		if(verbose)
+		    {
+			System.out.println("Parsed nickname? : "+hasnick+"\n"+"Parsed author? : "+hasauth+"\n"+"Parsed year? : "+hasyear+"\n"+"Parsed Sci-field? : "+hasfield+"\n");
+		    }
 		if(!hasnick || !hasauth || !hasyear || !hasfield)
 		    throw new IllegalArgumentException("You must supply a nickname for your paper, the first author, the year yyyy and at least the relevant scientific field."); 
 	    }
 	catch(IllegalArgumentException ae)
 	    {
 		System.out.println(ae);
-		System.out.println(Flagtypes.help());
 		System.exit(0);
 	    }
+
+	
+	
     }
-    
-    public static void main(String[] args)
+
+
+
+    private static void docommandline(
+				 String[] args,
+				 List<Option> optionlist,
+				 Scipaper paper)
     {
-	List<Option> optionlist = new ArrayList<Option>();
-        Scipaper paper;
 	String versionFile = System.getProperty("user.home")+File.separator+"SciSort"+File.separator+"SciSort"+File.separator+"VERSION.md";
+	
 	if(args.length==0)
 	    {
 		System.out.println("You need to pass command line arguments.");
@@ -124,11 +251,12 @@ public class SciAdd
 			switch (args[argc].charAt(0))
 			    {
 			    case '-':
-				if(args[argc].length() == 2)
+				if(Flagtypes.checkflagexists(args[argc]))
 				    {
 					if(args[argc].equals(Flagtypes.verbFlag))
 					    {
 						verbose=true;
+						optionlist.add(new Option(args[argc],"verbose_option"));
 						System.out.println("Verbosity turned on. I will tell you what I'm doing.");
 						break;
 					    }
@@ -147,7 +275,7 @@ public class SciAdd
 				    }
 				else
 				    {
-					throw new IllegalArgumentException("\nUsing flags one must place a flag key. e.g. -a not solely - . Type sciAdd -h or --help for help. ");
+					throw new IllegalArgumentException("\n Incorrect command line argument(s). Type sciAdd -h or --help for help.\n ");
 				    }
 				
 				break;
@@ -164,8 +292,10 @@ public class SciAdd
 		System.exit(0);
 	    }
 	
-	checkoptions(optionlist);
-	
-    }
-   
+}
+
+    // PRIVATE VARS
+    private static boolean verbose=false;
+    
+     
 }
